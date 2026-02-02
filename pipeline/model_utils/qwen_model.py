@@ -97,7 +97,12 @@ class QwenModel(ModelBase):
 
     def _load_model(self, model_path, dtype=torch.float16):
         model_kwargs = {}
-        # model_kwargs.update({"use_flash_attn": True})
+        
+        # --- 修改这里 ---
+        # 将 "use_flash_attn": True 改为 "attn_implementation": "flash_attention_2"
+        model_kwargs.update({"attn_implementation": "flash_attention_2"})
+        # ----------------
+        
         if dtype != "auto":
             model_kwargs.update({
                 "bf16": dtype==torch.bfloat16,
